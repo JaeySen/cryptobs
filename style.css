@@ -1,0 +1,64 @@
+.navbar {
+  background: black !important;
+}
+
+
+.banner1 {
+    background: url(images/banner1.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    text-shadow: 1px 1px 10px white;
+}
+
+.jumbotron {
+    height: 60vh;
+}
+
+.jumbotron.jumbotron-fluid.banner2 {
+    background: url(images/bg3.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    text-shadow: 1px 1px 10px white;
+}
+
+.row {
+    margin: 40px 0px;
+}
+
+.img-thumbnail {
+    max-width: 100%;
+    height: 30vh;
+    object-fit: cover;
+}
+footer {
+    padding: 85px;
+    background: black;
+    color: white;
+}
+
+.card {
+    margin: 10px 0;
+    border: none;
+}
+
+.lightbox {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background: rgb(0 0 0 / 90%);
+	display: none;
+	opacity: 0;
+	transition: opacity 400ms;
+}
+
+.lightbox img {
+    width: 90%;
+    height: auto;
+    margin: auto;
+}
