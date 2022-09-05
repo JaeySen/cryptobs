@@ -1,6 +1,6 @@
 $(document).ready(() => {
     console.log("doc loaded");
-    const imgList = $(".col-lg-3.col-md-4.col-sm-6").children(".img-fluid.img-thumbnail").contents().get();
+    const imgList = $(".col-lg-3.col-md-4.col-sm-6").children(".img-fluid.img-thumbnail");
     console.log(imgList)
 
     //listen for click event on gallery imgs
@@ -15,19 +15,24 @@ $(document).ready(() => {
 
    // listen for next click on lightbox
     $(".lightbox ul li.next").click(() => {
-        let current = $(".img-fluid.img-thumbnail.active");
-        console.log(current);
-        let next = $(".img-fluid.img-thumbnail.active").next();
-        let nextSrc = next.attr("src");
-        console.log("The next node src is: " + nextSrc);
-        if(nextSrc == null) {
-            nextnode = $(".img-fluid.img-thumbnail").first();
-            nextSrc = $(".img-fluid.img-thumbnail").first().attr("src");
+        let current = $(".img-fluid.img-thumbnail.active").get(0);
+        console.log("currentSrc:", current.getAttribute("src"));
+        let next = $(".img-fluid.img-thumbnail.active").closest(".col-lg-3.col-md-4.col-sm-6").next().find("img.img-fluid.img-thumbnail").get(0);
+
+
+        if(next == null) {
+            console.log("next:", next, "so we cycle to the first img");
+            next = $(".img-fluid.img-thumbnail").first().get(0);
+        }else{
+            console.log("next:", next);
         }
+        
+        let nextSrc = next.getAttribute("src");
+        console.log("nextSrc:", nextSrc);
         loadImg(nextSrc);
         //update active image class
-        next.addClass("active");
-        current.removeClass("active");
+        next.classList.add("active");
+        current.classList.remove("active");
     });
     // listen for prev click on lightbox
     $(".lightbox ul li.prev").click(function() {
@@ -51,8 +56,8 @@ $(document).ready(() => {
     // $(".lightbox").click(hideLightbox);
 
     $(".lightbox").click(function(){
-        $(".gallery img").removeClass("active");
-        hideLightbox();
+        // $(".gallery img").removeClass("active");
+        // hideLightbox();
     });
 
     function loadImg(src){
