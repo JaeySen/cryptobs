@@ -1,14 +1,11 @@
 $(document).ready(() => {
-    console.log("doc loaded");
-    const imgList = $(".col-lg-3.col-md-4.col-sm-6").children(".img-fluid.img-thumbnail");
-    console.log(imgList)
+    console.log("Doc loaded");
 
     //listen for click event on gallery imgs
     $(".img-fluid.img-thumbnail").click((event) => {
         // let src = event.target.getAttribute("src");
         let src = $(event.target).attr("src");
         $(event.target).addClass("active");
-        console.log(src);
         loadImg(src);
         showLightbox();
     });
@@ -16,19 +13,13 @@ $(document).ready(() => {
    // listen for next click on lightbox
     $(".lightbox ul li.next").click(() => {
         let current = $(".img-fluid.img-thumbnail.active").get(0);
-        console.log("currentSrc:", current.getAttribute("src"));
         let next = $(".img-fluid.img-thumbnail.active").closest(".col-lg-3.col-md-4.col-sm-6").next().find("img.img-fluid.img-thumbnail").get(0);
 
-
         if(next == null) {
-            console.log("next:", next, "so we cycle to the first img");
             next = $(".img-fluid.img-thumbnail").first().get(0);
-        }else{
-            console.log("next:", next);
         }
         
         let nextSrc = next.getAttribute("src");
-        console.log("nextSrc:", nextSrc);
         loadImg(nextSrc);
         //update active image class
         next.classList.add("active");
@@ -36,41 +27,30 @@ $(document).ready(() => {
     });
     // listen for prev click on lightbox
     $(".lightbox ul li.prev").click(function() {
-        console.log("prev");
-        let nextnode = $(".gallery img.active").next();
-        let currentnode = $(".gallery img.active");
-        let src = $(".gallery img.active").next().attr("src");
-        console.log("The next node src is: " + src);
-        if(src == null) {
-            src = $(".gallery img").last().attr("src");
-            nextnode = $(".gallery img").last();
+        let current = $(".img-fluid.img-thumbnail.active").get(0);
+        let prev = $(".img-fluid.img-thumbnail.active").closest(".col-lg-3.col-md-4.col-sm-6").prev().find("img.img-fluid.img-thumbnail").get(0);
+
+        if(prev == null) {
+            prev = $(".img-fluid.img-thumbnail").last().get(0);
         }
-        console.log("The next node src is: " + src);
-        loadImg(src);
+        
+        let prevSrc = prev.getAttribute("src");
+        loadImg(prevSrc);
         //update active image class
-        nextnode.addClass("active");
-        currentnode.removeClass("active");
+        prev.classList.add("active");
+        current.classList.remove("active");
     });
 
-    // $(".lightbox ul").click(function(event){});
-    // $(".lightbox").click(hideLightbox);
-
-    $(".lightbox").click(function(){
-        // $(".gallery img").removeClass("active");
-        // hideLightbox();
-    });
 
     function loadImg(src){
-        $(".lightbox img").attr("src",src);
+        $(".lightbox img").attr("src", src);
     };
-
 
     function showLightbox(){
         $(".lightbox").css("display","flex");
-        setTimeout(function(){
-            $(".lightbox").css("opactity", 1);
-        },10)
-        console.log("lightbox ON")
+        setTimeout(() => {
+            $(".lightbox").css("opacity", 1);
+        },100)
     };
 
     function hideLightbox(){
@@ -79,4 +59,17 @@ $(document).ready(() => {
             $(".lightbox").css("display","none");
         },300)
     };
+
+    $(".lightbox ul").click((event) => {
+        event.stopPropagation(); //stop triggering to hideLightbox()
+    });
+
+    $(".lightbox img").click(function(event) {
+        event.stopPropagation(); //stop triggering to hideLightbox()
+    });
+
+
+    $(".lightbox").click(() => {
+        hideLightbox();
+    });
 });
